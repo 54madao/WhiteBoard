@@ -9,7 +9,7 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.bean.WhiteBoard"%>
+<%@page import="com.local.service.WhiteBoardBean"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -49,6 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
                 <li><%out.print(basePath); %></li>
+                <li class="active"><a href="<%=basePath%>pages/accountMgn.jsp">Administration<span class="sr-only">(current)</span></a></li>
               </ul>
         
             </div>
@@ -85,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <tr>
                               <td>${it.name}</td>
                               <td>${it.description}</td>
-                              <td><a href="/Prog4-war/pages/wbview.jsp?name=${it.name}" target="_blank"><button class="btn btn-xs btn-primary">Open</button></a></td>
+                              <td><a href="<%=basePath%>pages/wbview.jsp?name=${it.name}" target="_blank"><button class="btn btn-xs btn-primary">Open</button></a></td>
                           </tr>
                       </c:forEach>
                   </tbody>

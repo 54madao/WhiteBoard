@@ -5,7 +5,7 @@
         <group>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-war/web/WEB-INF/web.xml</file>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-war/web/index.jsp</file>
-            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-war/web/pages/wbview.jsp</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-war/web/pages/accountMgn.jsp</file>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-war/src/java/com/sev/WhiteBoardServlet.java</file>
         </group>
     </open-files>

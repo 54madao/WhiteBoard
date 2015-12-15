@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/bean/WhiteBoard.java</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/UserBeanLocal.java</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/WhiteBoardBean.java</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/WhiteBoardBeanLocal.java</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/UserBean.java</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/bean/Users.java</file>
+        </group>
     </open-files>
 </project-private>
