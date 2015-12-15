@@ -5,8 +5,10 @@
         <group>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/bean/WhiteBoard.java</file>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/UserBeanLocal.java</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/conf/persistence.xml</file>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/WhiteBoardBean.java</file>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/WhiteBoardBeanLocal.java</file>
+            <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/conf/glassfish-resources.xml</file>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/local/service/UserBean.java</file>
             <file>file:/Users/wenbog/NetBeansProjects/Prog4/Prog4-ejb/src/java/com/bean/Users.java</file>
         </group>

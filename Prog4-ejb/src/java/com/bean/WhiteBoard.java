@@ -27,10 +27,10 @@ import javax.persistence.Table;
 	@Column(name = "ID_WHITEBOARD", nullable=false)
 	private Long id;
     
-	@Column(name="DESCRIPTION", nullable=false)
+	@Column(name="DESCRIPTION")
 	    private String description;
         
-        @Column(name="NAME", nullable=false)
+        @Column(name="NAME")
             private String name;
 
         public String getName() {

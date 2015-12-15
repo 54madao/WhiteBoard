@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -18,8 +20,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class WhiteBoardBean implements WhiteBoardBeanLocal {
         
-    //@PersistenceContext
-    //private EntityManager em;
+    @PersistenceContext(unitName = "testGuo")
+    private EntityManager em;
     
     private List<WhiteBoard> wb;
     @PostConstruct
@@ -31,7 +33,7 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
     
     @Override
     public void add(WhiteBoard wb) {
-        //em.persist(wb);
+        em.persist(wb);
         this.wb.add(wb);
     }
 
