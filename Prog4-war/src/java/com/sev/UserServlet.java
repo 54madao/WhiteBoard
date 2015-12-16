@@ -122,26 +122,26 @@ public class UserServlet extends HttpServlet {
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
 //            
-//            for(Users u: li){
-//                out.println("<tr>");
-//                out.println("<td>" + u.getId() + "</td>");
-//                out.println("<td>" + 
-//                            "<input type='text' class='name' value=" +
-//                            u.getUserName() + "></td>");
-//                out.println("<td>" + 
-//                            "<input type='text' class='pass' value=" +
-//                            u.getPassword() + "></td>");
-//                out.println("<td>" +
-//                            "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
-//                            u.getId() +
-//                            ")'>Delete</button>" +
-//                            "<button class='btn btn-xs btn-primary update'>Update</button>" +
-//                            "</td>)");   
-//                out.println("<tr>");
-//            }
-//            
-//            out.flush();
-//            out.close();
+            for(Users u: li){
+                out.println("<tr>");
+                out.println("<td>" + u.getId() + "</td>");
+                out.println("<td>" + 
+                            "<input type='text' class='name' value=" +
+                            u.getUserName() + "></td>");
+                out.println("<td>" + 
+                            "<input type='text' class='pass' value=" +
+                            u.getPassword() + "></td>");
+                out.println("<td>" +
+                            "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
+                            u.getId() +
+                            ")'>Delete</button>" +
+                            "<button class='btn btn-xs btn-primary update'>Update</button>" +
+                            "</td>)");   
+                out.println("<tr>");
+            }
+            
+            out.flush();
+            out.close();
         //}
         
         //request.getRequestDispatcher("/index.jsp").forward(request,response);

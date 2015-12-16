@@ -98,9 +98,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
+        $(document).ready(function(){
+            $('.navbar-brand').text(window.localStorage.getItem('userName'));
+            $.ajax({
+                url: '../UserServlet',
+                method: 'POST',
+                data: {
+                    op: 'get'
+                }
+            }).done(function(msg) {
+                //alert(msg);
+                $('#acclist').html(msg);
+                //alert( "success" );
+            }).fail(function() {
+                alert( "error" );
+            });
+        });
+        
         function Create(){           
             $.ajax({
-                url: 'UserServlet',
+                url: '../UserServlet',
                 method: 'POST',
                 data: {
                     name: $('#username').val(),
@@ -119,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         
         function Delete(id){
             $.ajax({
-                url: 'UserServlet',
+                url: '../UserServlet',
                 method: 'POST',
                 data: {
                     id: id,
@@ -167,7 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 //            alert(name);
 //            alert(des);
             $.ajax({
-                url: 'UserServlet',
+                url: '../UserServlet',
                 method: 'POST',
                 data: {
                     id: id,

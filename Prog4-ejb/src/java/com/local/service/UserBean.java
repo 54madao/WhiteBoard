@@ -54,6 +54,8 @@ public class UserBean implements UserBeanLocal {
         Users us = get(user.getId());
         //int index = this.users.indexOf(us);
         //this.users.set(index, us);
+        us.setUserName(user.getUserName());
+        us.setPassword(user.getPassword());
         em.merge(us);
     }
 
@@ -80,7 +82,7 @@ public class UserBean implements UserBeanLocal {
 //            }
 //        }
 //        return null;
-        String sql = "from TestUserInfo s where s.id=:uId";
+        String sql = "from Users s where s.id=:uId";
 	Query q= em.createQuery(sql);
 	q.setParameter("uId", id);
 	return (Users)q.getSingleResult();
@@ -93,7 +95,7 @@ public class UserBean implements UserBeanLocal {
 	Query query = em.createQuery(jpql);	
 	List<TestUserInfo> list = query.getResultList();
 	return list;*/
-        String sql = "from TestUserInfo s";
+        String sql = "from Users s";
 		
 	Query q = em.createQuery(sql);
         this.users = q.getResultList();
