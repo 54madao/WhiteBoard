@@ -5,8 +5,9 @@
  */
 package com.sev;
 
+import com.bean.Users;
 import com.bean.WhiteBoard;
-import com.local.service.WhiteBoardBean;
+import com.local.service.UserBeanLocal;
 import com.local.service.WhiteBoardBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 	private static final long serialVersionUID = 1L;
     //private static final String SHOPPING_CART_BEAN_SESION_KEY= "shoppingCart";
         WhiteBoardBeanLocal wbb;
+        UserBeanLocal ub;
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,6 +56,7 @@ import javax.servlet.http.HttpServletResponse;
             try {
                 InitialContext ic = new InitialContext();
                 wbb = (WhiteBoardBeanLocal) ic.lookup("java:comp/env/ejb/WhiteBoardBean");
+                ub = (UserBeanLocal) ic.lookup("java:comp/env/ejb/UserBean");
 
                 // put EJB in HTTP session for future servlet calls
                 //request.getSession().setAttribute(SHOPPING_CART_BEAN_SESION_KEY, createWhiteBoardBean);
@@ -67,15 +70,22 @@ import javax.servlet.http.HttpServletResponse;
         String id = request.getParameter("id");
         String wbName = request.getParameter("name");
         String wbDes = request.getParameter("description");
+        String wbOwner = request.getParameter("owner");
         WhiteBoard whiteboard = new WhiteBoard();
+        Users user = null;
+        System.out.println(wbOp);
+        System.out.println(wbOwner);
         if(wbOp.equals("add")){         
             System.out.println("Name: " + wbName + "\nDes: " + wbDes);
             if (wbName != null && wbName.length() > 0) {
                 whiteboard.setName(wbName);
                 whiteboard.setDescription(wbDes);
-                int size = wbb.getAll().size();
-                long setid = size == 0 ? 0 : wbb.getAll().get(size - 1).getId() + 1;
-                whiteboard.setId(setid);
+                user = ub.get(wbOwner);              
+                whiteboard.setOwner(user.getId());            
+//                int size = wbb.getAll().size();
+//                long setid = size == 0 ? 0 : wbb.getAll().get(size - 1).getId() + 1;
+//                whiteboard.setId(setid);
+
                 wbb.add(whiteboard);
             }
         }

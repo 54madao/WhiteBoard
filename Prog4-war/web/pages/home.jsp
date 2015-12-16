@@ -13,11 +13,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html>
     <head>
+        <script>
+	// haven't logged in
+	if(!window.localStorage.getItem("userName")){
+            document.location.href = '<%=basePath%>pages/login.jsp';
+	}
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <!-- Custom styles for this template -->
+        <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
         <title>Share with you</title>
     </head>
-    <body style="padding-top:70px" >
+    <body>
         
         <nav class="navbar navbar-inverse navbar-fixed-top">
           <div class="container-fluid">
@@ -28,13 +36,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Share with you</a>
+              <a class="navbar-brand" href="#"></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="#">Profile</a></li>
+                <li><a href="<%=basePath%>pages/login.jsp">Log Out</a></li>
               </ul>
               <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">
@@ -47,27 +56,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                <li><%out.print(basePath); %></li>
-                <li class="active"><a href="<%=basePath%>pages/accountMgn.jsp">Administration<span class="sr-only">(current)</span></a></li>
+                  <li><a href="#" class="active">Overview</a></li>
+                <li><a href="#">Home Page</a></li>
+                <li><a href="<%=basePath%>pages/accountMgn.jsp">Administration</a></li>
               </ul>
         
             </div>
-            <div class="col-sm-9  col-md-10  main">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
               <h1 class="page-header">White board Creation</h1>
 
               <div class="row">
-                  <div id="wdcreate" class="form-inline">
-                        <div class="form-group">
+                    <form id="wbform" class="form-inline">
+                        
                             <label for="exampleInputName2">Name</label>
                             <input type="text" name="name" class="form-control" id="wbname" placeholder="Name">
-                        </div>
-                     <div class="form-group">
+                        
+                        
                             <label for="exampleInputEmail2">Description</label>
                             <input type="text" name="description" class="form-control" id="wbdes" placeholder="Descriptions">
-                    </div>
-                    <button class="btn btn-default" onclick="Create()">Create</button>
-                </div>
+                       
+                        <input type="hidden" name="op" id="op" class="form-control" value="add">
+                        <input type="hidden" name="owner" id="owner" class="form-control">
+                        <button class="btn btn-default" onclick="Create()">Create</button>
+                    </form>
               </div>
 
               <h2 class="sub-header">White Board List</h2>
@@ -78,6 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Owner</th>
                         <th>Operations</th>
                     </tr>
                   </thead>
@@ -98,15 +110,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-        function Create(){           
+        $(document).ready(function(){
+            $('.navbar-brand').text(window.localStorage.getItem('userName'));
+            $('#owner').val(window.localStorage.getItem("userName"));
             $.ajax({
-                url: 'WhiteBoardServlet',
+                url: '../WhiteBoardServlet',
                 method: 'POST',
                 data: {
-                    name: $('#wbname').val(),
-                    description: $('#wbdes').val(),
-                    op: 'add'
+                    op: 'get'
                 }
+            }).done(function(msg) {
+                //alert(msg);
+                $('#wblist').html(msg);
+                //alert( "success" );
+            }).fail(function() {
+                alert( "error" );
+            });
+        });
+        
+        
+        
+        function Create(){
+            event.preventDefault();
+            $.ajax({
+                url: '../WhiteBoardServlet',
+                method: 'POST',
+                data: $('#wbform').serialize()
             }).done(function(msg) {
                 //alert(msg);
                 $('#wblist').html(msg);
@@ -119,7 +148,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         
         function Delete(id){
             $.ajax({
-                url: 'WhiteBoardServlet',
+                url: '../WhiteBoardServlet',
                 method: 'POST',
                 data: {
                     id: id,
@@ -163,16 +192,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var id = tr.eq(0).text();
             var name = tr.find('.name').val();
             var des = tr.find('.des').val();
+            var owner = tr.find('.owner').text();
 //            alert(id);
 //            alert(name);
 //            alert(des);
             $.ajax({
-                url: 'WhiteBoardServlet',
+                url: '../WhiteBoardServlet',
                 method: 'POST',
                 data: {
                     id: id,
                     name: name,
                     description: des,
+                    owner: owner,
                     op: 'update'
                 }
             }).done(function(msg) {
@@ -184,5 +215,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
         });
 
+        // Logout function
+	$(document).on('click', "[href='<%=basePath%>pages/login.jsp']",function(){
+            window.localStorage.removeItem("userName");
+	});
     </script>
 </html>

@@ -15,9 +15,11 @@ import javax.ejb.Local;
  */
 @Local
 public interface UserBeanLocal {
-    public void add(Users user);
+    public boolean add(Users user);
     public void update(Users user);
     public void delete(Users user);
     public Users get(long id);
+    public Users get(String name);
     public List<Users> getAll();
+    public boolean check(Users user);
 }

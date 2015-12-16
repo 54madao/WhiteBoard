@@ -63,15 +63,30 @@ public class UserServlet extends HttpServlet {
         String userame = request.getParameter("name");
         String userpass = request.getParameter("password");
         Users users = new Users();
+        
+        System.out.println("Name: " + userame + "\nPASS: " + userpass);
+        System.out.println(op);
+        
+        PrintWriter out = response.getWriter();
         if(op.equals("add")){         
             System.out.println("Name: " + userame + "\nDes: " + userpass);
             if (userame != null && userame.length() > 0) {
                 users.setUserName(userame);
                 users.setPassword(userpass);
-                int size = ub.getAll().size();
-                long setid = size == 0 ? 0 : ub.getAll().get(size - 1).getId() + 1;
-                users.setId(setid);
-                ub.add(users);
+                
+//                int size = ub.getAll().size();
+//                long setid = size == 0 ? 0 : ub.getAll().get(size - 1).getId() + 1;
+//                users.setId(setid);
+                
+                
+                if(ub.add(users)){
+                    out.print("True");
+                }
+                else{
+                    out.print("False");
+                }
+                out.flush();
+                out.close();
             }
         }
         else if(op.equals("update")){
@@ -85,37 +100,49 @@ public class UserServlet extends HttpServlet {
         else if(op.equals("delete")){
             users.setId(Long.parseLong(id));
             ub.delete(users);
+        }else if(op.equals("check")){
+            users.setUserName(userame);
+            users.setPassword(userpass);
+           
+            if(ub.check(users)){
+                out.print("True");
+            }
+            else{
+                out.print("False");
+            }
+            out.flush();
+            out.close();
         }
         
         
         List<Users> li = ub.getAll();
         System.out.println(li.size());
-        //request.setAttribute("list", li);
-        //        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            for(Users u: li){
-                out.println("<tr>");
-                out.println("<td>" + u.getId() + "</td>");
-                out.println("<td>" + 
-                            "<input type='text' class='name' value=" +
-                            u.getUserName() + "></td>");
-                out.println("<td>" + 
-                            "<input type='text' class='pass' value=" +
-                            u.getPassword() + "></td>");
-                out.println("<td>" +
-                            "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
-                            u.getId() +
-                            ")'>Delete</button>" +
-                            "<button class='btn btn-xs btn-primary update'>Update</button>" +
-                            "</td>)");   
-                out.println("<tr>");
-            }
-            
-            out.flush();
-            out.close();
-        }
+//        //request.setAttribute("list", li);
+//        //        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            
+//            for(Users u: li){
+//                out.println("<tr>");
+//                out.println("<td>" + u.getId() + "</td>");
+//                out.println("<td>" + 
+//                            "<input type='text' class='name' value=" +
+//                            u.getUserName() + "></td>");
+//                out.println("<td>" + 
+//                            "<input type='text' class='pass' value=" +
+//                            u.getPassword() + "></td>");
+//                out.println("<td>" +
+//                            "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
+//                            u.getId() +
+//                            ")'>Delete</button>" +
+//                            "<button class='btn btn-xs btn-primary update'>Update</button>" +
+//                            "</td>)");   
+//                out.println("<tr>");
+//            }
+//            
+//            out.flush();
+//            out.close();
+        //}
         
         //request.getRequestDispatcher("/index.jsp").forward(request,response);
 //        response.setContentType("text/html;charset=UTF-8");

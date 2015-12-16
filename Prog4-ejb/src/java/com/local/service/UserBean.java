@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,8 +22,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class UserBean implements UserBeanLocal {
 
-        //@PersistenceContext
-    //private EntityManager em;
+    @PersistenceContext(unitName = "testGuo")
+    private EntityManager em;
     
     private List<Users> users;
     @PostConstruct
@@ -30,9 +34,16 @@ public class UserBean implements UserBeanLocal {
     
     
     @Override
-    public void add(Users user) {
+    public boolean add(Users user) {
         //em.persist(wb);
-        users.add(user);
+
+        //users.add(user);
+        if(get(user.getUserName()) == null){
+            em.persist(user);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -81,5 +92,32 @@ public class UserBean implements UserBeanLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public boolean check(Users user) {
+        String sql = "from Users s where s.userName=:uName and s.password=:uPsd";
+        Query q = em.createQuery(sql);
+        q.setParameter("uName", user.getUserName());
+        q.setParameter("uPsd", user.getPassword());
+        try{
+            Users tmp = (Users)q.getSingleResult();
+            return true;
+        } catch(NoResultException e){
+            return false;
+        }
+ 
+    }
+
+    @Override
+    public Users get(String name) {
+        String sql = "from Users s where s.userName=:uName";
+        Query q = em.createQuery(sql);
+        q.setParameter("uName", name);
+        try{
+            return (Users)q.getSingleResult();
+        } catch(NoResultException e){       
+            return null;
+        }  
+    }
     
 }

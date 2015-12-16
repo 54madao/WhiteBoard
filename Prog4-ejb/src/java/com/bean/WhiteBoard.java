@@ -27,12 +27,15 @@ import javax.persistence.Table;
 	@Column(name = "ID_WHITEBOARD", nullable=false)
 	private Long id;
     
-	@Column(name="DESCRIPTION")
+	@Column(name="DESCRIPTION", nullable=false)
 	    private String description;
         
-        @Column(name="NAME")
+        @Column(name="NAME", nullable=false)
             private String name;
-
+        
+        @Column(name="OWNER", nullable=false)
+            private Long owner;
+        
         public String getName() {
             return name;
         }
@@ -81,4 +84,13 @@ import javax.persistence.Table;
 	public void setDescription( String description ) {
 	    this.description = description;
 	}
+
+    public Long getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Long owner) {
+        this.owner = owner;
+    }
+        
     }

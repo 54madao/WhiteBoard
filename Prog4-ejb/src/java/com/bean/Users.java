@@ -6,6 +6,7 @@
 package com.bean;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,12 +20,14 @@ import javax.persistence.Id;
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_USER", nullable=false)
     private Long id;
     
+    @Column(name = "USERNAME", nullable=false)
     private String userName;
     
+    @Column(name = "PASSWORD", nullable=false)
     private String password;
 
     public void setUserName(String userName) {
