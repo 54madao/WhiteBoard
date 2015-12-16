@@ -28,7 +28,7 @@ public class UserBean implements UserBeanLocal {
     private List<Users> users;
     @PostConstruct
 	private void init( ) {
-        users = new ArrayList<>( );
+        //users = new ArrayList<>( );
     }
         
     
@@ -52,8 +52,9 @@ public class UserBean implements UserBeanLocal {
         
         //facade
         Users us = get(user.getId());
-        int index = this.users.indexOf(us);
-        this.users.set(index, us);
+        //int index = this.users.indexOf(us);
+        //this.users.set(index, us);
+        em.merge(us);
     }
 
     @Override
@@ -63,7 +64,8 @@ public class UserBean implements UserBeanLocal {
         //facade
         Users us = get(user.getId());
         
-        this.users.remove(us);
+        //this.users.remove(us);
+        em.remove(em.merge(us));
     }
 
     @Override
@@ -72,12 +74,16 @@ public class UserBean implements UserBeanLocal {
 	Query query = em.createQuery(jpql);
 	query.setParameter("uId", userId);
 	return (TestUserInfo)query.getSingleResult();*/
-        for(Users us: this.users){
-            if(us.getId() == id){
-                return us;
-            }
-        }
-        return null;
+//        for(Users us: this.users){
+//            if(us.getId() == id){
+//                return us;
+//            }
+//        }
+//        return null;
+        String sql = "from TestUserInfo s where s.id=:uId";
+	Query q= em.createQuery(sql);
+	q.setParameter("uId", id);
+	return (Users)q.getSingleResult();
     }
 
     @Override
@@ -87,6 +93,10 @@ public class UserBean implements UserBeanLocal {
 	Query query = em.createQuery(jpql);	
 	List<TestUserInfo> list = query.getResultList();
 	return list;*/
+        String sql = "from TestUserInfo s";
+		
+	Query q = em.createQuery(sql);
+        this.users = q.getResultList();
         return this.users;
     }
 

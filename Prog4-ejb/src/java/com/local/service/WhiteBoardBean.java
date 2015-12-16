@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,7 +27,7 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
     private List<WhiteBoard> wb;
     @PostConstruct
 	private void init( ) {
-        wb = new ArrayList<>( );
+        //wb = new ArrayList<>( );
     }
         
     
@@ -34,7 +35,7 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
     @Override
     public void add(WhiteBoard wb) {
         em.persist(wb);
-        this.wb.add(wb);
+        //this.wb.add(wb);
     }
 
     @Override
@@ -43,8 +44,11 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
         
         //facade
         WhiteBoard whiteboard = get(wb.getId());
-        int index = this.wb.indexOf(whiteboard);
-        this.wb.set(index, wb);
+        whiteboard.setName(wb.getName());
+        whiteboard.setDescription(wb.getDescription());
+        //int index = this.wb.indexOf(whiteboard);
+        //this.wb.set(index, wb);
+        em.merge(whiteboard);
     }
 
     @Override
@@ -54,7 +58,9 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
         //facade
         WhiteBoard whiteboard = get(wb.getId());
         
-        this.wb.remove(whiteboard);
+        //this.wb.remove(whiteboard);
+        
+        em.remove(em.merge(whiteboard));
     }
 
     @Override
@@ -63,12 +69,16 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
 	Query query = em.createQuery(jpql);
 	query.setParameter("uId", userId);
 	return (TestUserInfo)query.getSingleResult();*/
-        for(WhiteBoard wb: this.wb){
-            if(wb.getId() == id){
-                return wb;
-            }
-        }
-        return null;
+//        for(WhiteBoard wb: this.wb){
+//            if(wb.getId() == id){
+//                return wb;
+//            }
+//        }
+//        return null;
+        String sql = "from WhiteBoard s where s.id=:wbId";
+	Query q = em.createQuery(sql);
+	q.setParameter("wbId", id);
+	return (WhiteBoard)q.getSingleResult();
     }
 
     @Override
@@ -78,6 +88,10 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
 	Query query = em.createQuery(jpql);	
 	List<TestUserInfo> list = query.getResultList();
 	return list;*/
+        //return this.wb;
+        String sql = "from WhiteBoard s";	
+	Query q = em.createQuery(sql);	 
+        this.wb = q.getResultList(); 
         return this.wb;
     }
 

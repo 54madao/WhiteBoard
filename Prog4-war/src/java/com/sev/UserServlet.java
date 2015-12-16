@@ -48,7 +48,7 @@ public class UserServlet extends HttpServlet {
         
             try {
                 InitialContext ic = new InitialContext();
-                ub = (UserBeanLocal) ic.lookup("java:comp/env/ejb/WhiteBoardBean");
+                ub = (UserBeanLocal) ic.lookup("java:comp/env/ejb/UserBean");
 
                 // put EJB in HTTP session for future servlet calls
                 //request.getSession().setAttribute(SHOPPING_CART_BEAN_SESION_KEY, createWhiteBoardBean);

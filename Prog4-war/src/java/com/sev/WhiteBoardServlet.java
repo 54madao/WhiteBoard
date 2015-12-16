@@ -120,6 +120,8 @@ import javax.servlet.http.HttpServletResponse;
                             "<input type='text' class='des' value=" +
                             wb.getDescription() + "></td>");
                 out.println("<td>" +
+                            wb.getOwner() + "</td>");
+                out.println("<td>" +
                             "<a href='/Prog4-war/pages/wbview.jsp?name='" +
                             wb.getName() +
                             "' target='_blank'>" +
