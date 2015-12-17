@@ -31,8 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 
 	private static final long serialVersionUID = 1L;
     //private static final String SHOPPING_CART_BEAN_SESION_KEY= "shoppingCart";
-        WhiteBoardBeanLocal wbb;
-        UserBeanLocal ub;
+        WhiteBoardBeanLocal wbb = null;
+        UserBeanLocal ub = null;
+        Users user = null;
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -70,17 +71,22 @@ import javax.servlet.http.HttpServletResponse;
         String id = request.getParameter("id");
         String wbName = request.getParameter("name");
         String wbDes = request.getParameter("description");
-        String wbOwner = request.getParameter("owner");
+        String wbUser = request.getParameter("user");
+        String wbPersonal = request.getParameter("personal");
         WhiteBoard whiteboard = new WhiteBoard();
-        Users user = null;
+        user = ub.get(wbUser);
+        
         System.out.println(wbOp);
-        System.out.println(wbOwner);
+        System.out.println(wbUser);
+        
+        PrintWriter out = response.getWriter();
+        
         if(wbOp.equals("add")){         
             System.out.println("Name: " + wbName + "\nDes: " + wbDes);
             if (wbName != null && wbName.length() > 0) {
                 whiteboard.setName(wbName);
                 whiteboard.setDescription(wbDes);
-                user = ub.get(wbOwner);              
+                user = ub.get(wbUser);              
                 whiteboard.setOwner(user);            
 //                int size = wbb.getAll().size();
 //                long setid = size == 0 ? 0 : wbb.getAll().get(size - 1).getId() + 1;
@@ -100,43 +106,21 @@ import javax.servlet.http.HttpServletResponse;
         else if(wbOp.equals("delete")){
             whiteboard.setId(Long.parseLong(id));
             wbb.delete(whiteboard);
+        }if(wbOp.equals("subscribe")){
+            whiteboard.setId(Long.parseLong(id));
+            user = ub.get(wbUser);
+            wbb.subscribe(whiteboard, user);
         }
         
-        
-        List<WhiteBoard> li = wbb.getAll();
-        System.out.println(li.size());
-        //request.setAttribute("list", li);
-        //        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            for(WhiteBoard wb: li){
-                out.println("<tr>");
-                out.println("<td>" + wb.getId() + "</td>");
-                out.println("<td>" + 
-                            "<input type='text' class='name' value=" +
-                            wb.getName() + "></td>");
-                out.println("<td>" + 
-                            "<input type='text' class='des' value=" +
-                            wb.getDescription() + "></td>");
-                out.println("<td>" +
-                            wb.getOwner().getUserName() + "</td>");
-                out.println("<td>" +
-                            "<a href='/Prog4-war/pages/wbview.jsp?name='" +
-                            wb.getName() +
-                            "' target='_blank'>" +
-                            "<button class='btn btn-xs btn-primary'>Open</button></a>" +
-                            "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
-                            wb.getId() +
-                            ")'>Delete</button>" +
-                            "<button class='btn btn-xs btn-primary update'>Update</button>" +
-                            "</td>)");   
-                out.println("<tr>");
-            }
+        if(wbPersonal.equals("personal")){
+            personal(out);
+        }else{
+            overview(out);
+        }
             
             out.flush();
             out.close();
-        }
+        
         
         //request.getRequestDispatcher("/index.jsp").forward(request,response);
 //        response.setContentType("text/html;charset=UTF-8");
@@ -172,6 +156,98 @@ import javax.servlet.http.HttpServletResponse;
 //        }
 	}
 
+        private void overview(PrintWriter out){
+            List<WhiteBoard> li = wbb.getAll();
+            System.out.println(li.size());
+            //request.setAttribute("list", li);
+            //        response.setContentType("text/html;charset=UTF-8");
+        
+            /* TODO output your page here. You may use following sample code. */
+            
+            for(WhiteBoard wb: li){
+                out.println("<tr>");
+                out.println("<td>" + wb.getId() + "</td>");
+                out.println("<td>" + 
+                            "<input type='text' class='name' value=" +
+                            wb.getName() + "></td>");
+                out.println("<td>" + 
+                            "<input type='text' class='des' value=" +
+                            wb.getDescription() + "></td>");
+                out.println("<td>" +
+                            wb.getOwner().getUserName() + "</td>");
+                if(wb.getOwner().getId().equals(user.getId())){
+                    out.println("<td>" +
+                            "<a href='/Prog4-war/pages/wbview.jsp?name=" +
+                            wb.getName() +
+                            "' target='_blank'>" +
+                            "<button class='btn btn-xs btn-primary'>Open</button></a>" +
+                            "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
+                            wb.getId() +
+                            ")'>Delete</button>" +
+                            "<button class='btn btn-xs btn-primary update'>Update</button>" +
+                            "</td>");
+                }else{
+                    out.println("<td>" +
+                            "<a href='/Prog4-war/pages/wbview.jsp?name='" +
+                            wb.getName() +
+                            "' target='_blank'>" +
+                            "<button class='btn btn-xs btn-primary'>Open</button></a>" +              
+                            "<button class='btn btn-xs btn-primary' onclick='Subscribe(" + 
+                            wb.getId() +
+                            ")'>Subscribe</button>" +
+                            "</td>");
+                }
+                out.println("<tr>");
+            }
+        }
+        
+        private void personal(PrintWriter out){
+            List<WhiteBoard> li = wbb.getAll();
+            System.out.println(li.size());
+            //request.setAttribute("list", li);
+            //        response.setContentType("text/html;charset=UTF-8");
+        
+            /* TODO output your page here. You may use following sample code. */
+            
+            for(WhiteBoard wb: li){
+                if(wb.getOwner().getId().equals(user.getId()) || wb.getSubscriber().contains(user)){
+                    out.println("<tr>");
+                    out.println("<td>" + wb.getId() + "</td>");
+                    out.println("<td>" + 
+                                "<input type='text' class='name' value=" +
+                                wb.getName() + "></td>");
+                    out.println("<td>" + 
+                                "<input type='text' class='des' value=" +
+                                wb.getDescription() + "></td>");
+                    out.println("<td>" +
+                                wb.getOwner().getUserName() + "</td>");
+                    if(wb.getOwner().getId().equals(user.getId())){
+                        out.println("<td>" +
+                                "<a href='/Prog4-war/pages/wbview.jsp?name=" +
+                                wb.getName() +
+                                "' target='_blank'>" +
+                                "<button class='btn btn-xs btn-primary'>Open</button></a>" +
+                                "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
+                                wb.getId() +
+                                ")'>Delete</button>" +
+                                "<button class='btn btn-xs btn-primary update'>Update</button>" +
+                                "</td>");
+                    }else{
+                        out.println("<td>" +
+                                "<a href='/Prog4-war/pages/wbview.jsp?name='" +
+                                wb.getName() +
+                                "' target='_blank'>" +
+                                "<button class='btn btn-xs btn-primary'>Open</button></a>" +              
+                                "<button class='btn btn-xs btn-primary' onclick='Subscribe(" + 
+                                wb.getId() +
+                                ")'>Subscribe</button>" +
+                                "</td>");
+                    }
+                    out.println("<tr>");
+                }
+            }
+        }
+        
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.

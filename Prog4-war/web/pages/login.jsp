@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 //alert(msg);
                 //$('#acclist').html(msg);
                 //alert( "success" );
-                alert( msg );
+                alert( "success" );
             }).fail(function() {
                 alert( "error" );
             });    

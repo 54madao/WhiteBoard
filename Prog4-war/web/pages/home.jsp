@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
-                  <li><a href="#">Overview</a></li>
+                  <li><a href="<%=basePath%>pages/wbMgn.jsp">Overview</a></li>
                 <li><a href="<%=basePath%>pages/home.jsp" class="active">Home Page</a></li>
                 <li><a href="<%=basePath%>pages/accountMgn.jsp">Administration</a></li>
               </ul>
@@ -76,7 +76,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <input type="text" name="description" class="form-control" id="wbdes" placeholder="Descriptions">
                        
                         <input type="hidden" name="op" id="op" class="form-control" value="add">
-                        <input type="hidden" name="owner" id="owner" class="form-control">
+                        <input type="hidden" name="user" id="owner" class="form-control">
+                        <input type="hidden" name="personal" id="owner" class="form-control" value="personal">
                         <button class="btn btn-default" onclick="Create()">Create</button>
                     </form>
               </div>
@@ -117,7 +118,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 url: '../WhiteBoardServlet',
                 method: 'POST',
                 data: {
-                    op: 'get'
+                    op: 'get',
+                    user: window.localStorage.getItem('userName'),
+                    personal: 'personal'
                 }
             }).done(function(msg) {
                 //alert(msg);
@@ -152,7 +155,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 method: 'POST',
                 data: {
                     id: id,
-                    op: 'delete'
+                    op: 'delete',
+                    user: window.localStorage.getItem('userName'),
+                    personal: 'personal'
                 }
             }).done(function(msg) {
                 //alert(msg);
@@ -163,6 +168,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
         }
         
+        function Subscribe(id){
+            $.ajax({
+                url: '../WhiteBoardServlet',
+                method: 'POST',
+                data: {
+                    id: id,
+                    user: window.localStorage.getItem('userName'),
+                    op: 'subscribe',
+                    personal: 'personal'
+                }
+            }).done(function(msg) {
+                //alert(msg);
+                $('#wblist').html(msg);
+                //alert( "success" );
+            }).fail(function() {
+                alert( "error" );
+            });
+        }
         //function Update(id){
             //alert($(this).closest("tr").html());
             //alert(tr.length);
@@ -203,8 +226,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     id: id,
                     name: name,
                     description: des,
-                    owner: owner,
-                    op: 'update'
+                    user: window.localStorage.getItem('userName'),
+                    op: 'update',
+                    personal: 'personal'
                 }
             }).done(function(msg) {
                 //alert(msg);

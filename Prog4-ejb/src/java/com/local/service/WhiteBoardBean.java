@@ -5,9 +5,11 @@
  */
 package com.local.service;
 
+import com.bean.Users;
 import com.bean.WhiteBoard;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -99,5 +101,14 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public void subscribe(WhiteBoard wb, Users user) {
+        WhiteBoard whiteboard = get(wb.getId());
+        whiteboard.getSubscriber().add(user);
+        em.merge(whiteboard);
+        WhiteBoard tmp = get(wb.getId());
+        System.out.println("Size:" + tmp.getSubscriber().size());
+    }
     
 }

@@ -5,6 +5,7 @@
  */
 package com.local.service;
 
+import com.bean.Users;
 import com.bean.WhiteBoard;
 import java.util.List;
 import javax.ejb.Local;
@@ -20,4 +21,5 @@ public interface WhiteBoardBeanLocal {
     public void delete(WhiteBoard wb);
     public WhiteBoard get(long id);
     public List<WhiteBoard> getAll();
+    public void subscribe(WhiteBoard wb, Users user);
 }

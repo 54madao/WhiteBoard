@@ -39,7 +39,7 @@ public class Users implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "owner", orphanRemoval=true )
     private Set<WhiteBoard> own;
     
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER )
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "subscriber" )
     private Set<WhiteBoard> subscrib;
         
     public void setUserName(String userName) {

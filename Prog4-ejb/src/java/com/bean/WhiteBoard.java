@@ -7,6 +7,7 @@
 package com.bean;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -44,9 +46,12 @@ import javax.persistence.Table;
         @JoinColumn(name="ID_OWNER", nullable=false)
             private Users owner;
         
-        @ManyToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "subscrib")
-        @JoinColumn(name="ID_SUBSCRIBER")
-            private Set<Users> subscriber;
+        @ManyToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER)
+        @JoinTable(
+            name="WB_USER",
+            joinColumns={@JoinColumn(name="WB_ID", referencedColumnName="ID_WHITEBOARD")},
+            inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID_USER")})
+            private Set<Users> subscriber = new HashSet<Users>(0);
         
         public String getName() {
             return name;

@@ -57,7 +57,7 @@ String userName;
           <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
-                  <li><a href="#" class="active">Overview</a></li>
+                  <li><a href="<%=basePath%>pages/wbMgn.jsp" class="active">Overview</a></li>
                 <li><a href="<%=basePath%>pages/home.jsp">Home Page</a></li>
                 <li><a href="<%=basePath%>pages/accountMgn.jsp">Administration</a></li>
               </ul>
@@ -100,7 +100,9 @@ String userName;
                 url: '../WhiteBoardServlet',
                 method: 'POST',
                 data: {
-                    op: 'get'
+                    op: 'get',
+                    user: window.localStorage.getItem('userName'),
+                    personal: 'overview'
                 }
             }).done(function(msg) {
                 //alert(msg);
@@ -113,21 +115,21 @@ String userName;
         
         
         
-        function Create(){
-            event.preventDefault();
-            $.ajax({
-                url: '../WhiteBoardServlet',
-                method: 'POST',
-                data: $('#wbform').serialize()
-            }).done(function(msg) {
-                //alert(msg);
-                $('#wblist').html(msg);
-                //alert( "success" );
-            }).fail(function() {
-                alert( "error" );
-            });
-            
-        }
+//        function Create(){
+//            event.preventDefault();
+//            $.ajax({
+//                url: '../WhiteBoardServlet',
+//                method: 'POST',
+//                data: $('#wbform').serialize()
+//            }).done(function(msg) {
+//                //alert(msg);
+//                $('#wblist').html(msg);
+//                //alert( "success" );
+//            }).fail(function() {
+//                alert( "error" );
+//            });
+//            
+//        }
         
         function Delete(id){
             $.ajax({
@@ -135,7 +137,9 @@ String userName;
                 method: 'POST',
                 data: {
                     id: id,
-                    op: 'delete'
+                    op: 'delete',
+                    user: window.localStorage.getItem('userName'),
+                    personal: 'overview'
                 }
             }).done(function(msg) {
                 //alert(msg);
@@ -146,6 +150,24 @@ String userName;
             });
         }
         
+        function Subscribe(id){
+            $.ajax({
+                url: '../WhiteBoardServlet',
+                method: 'POST',
+                data: {
+                    id: id,
+                    user: window.localStorage.getItem('userName'),
+                    op: 'subscribe',
+                    personal: 'overview'
+                }
+            }).done(function(msg) {
+                //alert(msg);
+                $('#wblist').html(msg);
+                //alert( "success" );
+            }).fail(function() {
+                alert( "error" );
+            });
+        }
         //function Update(id){
             //alert($(this).closest("tr").html());
             //alert(tr.length);
@@ -186,8 +208,9 @@ String userName;
                     id: id,
                     name: name,
                     description: des,
-                    owner: owner,
-                    op: 'update'
+                    user: window.localStorage.getItem('userName'),
+                    op: 'update',
+                    personal: 'overview'
                 }
             }).done(function(msg) {
                 //alert(msg);
