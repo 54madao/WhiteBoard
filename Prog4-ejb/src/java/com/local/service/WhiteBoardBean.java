@@ -102,13 +102,13 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    @Override
-    public void subscribe(WhiteBoard wb, Users user) {
-        WhiteBoard whiteboard = get(wb.getId());
-        whiteboard.getSubscriber().add(user);
-        em.merge(whiteboard);
-        WhiteBoard tmp = get(wb.getId());
-        System.out.println("Size:" + tmp.getSubscriber().size());
-    }
+//    @Override
+//    public void subscribe(WhiteBoard wb, Users user) {
+//        WhiteBoard whiteboard = get(wb.getId());
+//        whiteboard.getSubscriber().add(user);
+//        em.merge(whiteboard);
+//        WhiteBoard tmp = get(wb.getId());
+//        System.out.println("Size:" + tmp.getSubscriber().size());
+//    }
     
 }

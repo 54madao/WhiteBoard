@@ -106,10 +106,6 @@ import javax.servlet.http.HttpServletResponse;
         else if(wbOp.equals("delete")){
             whiteboard.setId(Long.parseLong(id));
             wbb.delete(whiteboard);
-        }if(wbOp.equals("subscribe")){
-            whiteboard.setId(Long.parseLong(id));
-            user = ub.get(wbUser);
-            wbb.subscribe(whiteboard, user);
         }
         
         if(wbPersonal.equals("personal")){
@@ -192,9 +188,6 @@ import javax.servlet.http.HttpServletResponse;
                             wb.getName() +
                             "' target='_blank'>" +
                             "<button class='btn btn-xs btn-primary'>Open</button></a>" +              
-                            "<button class='btn btn-xs btn-primary' onclick='Subscribe(" + 
-                            wb.getId() +
-                            ")'>Subscribe</button>" +
                             "</td>");
                 }
                 out.println("<tr>");
@@ -210,7 +203,7 @@ import javax.servlet.http.HttpServletResponse;
             /* TODO output your page here. You may use following sample code. */
             
             for(WhiteBoard wb: li){
-                if(wb.getOwner().getId().equals(user.getId()) || wb.getSubscriber().contains(user)){
+                if(wb.getOwner().getId().equals(user.getId())){
                     out.println("<tr>");
                     out.println("<td>" + wb.getId() + "</td>");
                     out.println("<td>" + 
@@ -238,9 +231,6 @@ import javax.servlet.http.HttpServletResponse;
                                 wb.getName() +
                                 "' target='_blank'>" +
                                 "<button class='btn btn-xs btn-primary'>Open</button></a>" +              
-                                "<button class='btn btn-xs btn-primary' onclick='Subscribe(" + 
-                                wb.getId() +
-                                ")'>Subscribe</button>" +
                                 "</td>");
                     }
                     out.println("<tr>");

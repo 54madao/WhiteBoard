@@ -132,9 +132,6 @@ public class UserServlet extends HttpServlet {
                             "<input type='text' class='pass' value=" +
                             u.getPassword() + "></td>");
                 out.println("<td>" +
-                            "<button class='btn btn-xs btn-primary' onclick='Delete(" + 
-                            u.getId() +
-                            ")'>Delete</button>" +
                             "<button class='btn btn-xs btn-primary update'>Update</button>" +
                             "</td>)");   
                 out.println("<tr>");

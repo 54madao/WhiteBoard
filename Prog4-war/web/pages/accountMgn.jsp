@@ -35,6 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="#">Profile</a></li>
+                <li><a href="<%=basePath%>pages/login.jsp">Log Out</a></li>
               </ul>
               <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">

@@ -46,13 +46,6 @@ import javax.persistence.Table;
         @JoinColumn(name="ID_OWNER", nullable=false)
             private Users owner;
         
-        @ManyToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER)
-        @JoinTable(
-            name="WB_USER",
-            joinColumns={@JoinColumn(name="WB_ID", referencedColumnName="ID_WHITEBOARD")},
-            inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID_USER")})
-            private Set<Users> subscriber = new HashSet<Users>(0);
-        
         public String getName() {
             return name;
         }
@@ -108,14 +101,5 @@ import javax.persistence.Table;
 
     public void setOwner(Users owner) {
         this.owner = owner;
-    }
-
-    public Set<Users> getSubscriber() {
-        return subscriber;
-    }
-
-    public void setSubscriber(Set<Users> subscriber) {
-        this.subscriber = subscriber;
-    }
-        
+    }      
     }

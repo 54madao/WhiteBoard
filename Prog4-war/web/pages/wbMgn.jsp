@@ -150,24 +150,24 @@ String userName;
             });
         }
         
-        function Subscribe(id){
-            $.ajax({
-                url: '../WhiteBoardServlet',
-                method: 'POST',
-                data: {
-                    id: id,
-                    user: window.localStorage.getItem('userName'),
-                    op: 'subscribe',
-                    personal: 'overview'
-                }
-            }).done(function(msg) {
-                //alert(msg);
-                $('#wblist').html(msg);
-                //alert( "success" );
-            }).fail(function() {
-                alert( "error" );
-            });
-        }
+//        function Subscribe(id){
+//            $.ajax({
+//                url: '../WhiteBoardServlet',
+//                method: 'POST',
+//                data: {
+//                    id: id,
+//                    user: window.localStorage.getItem('userName'),
+//                    op: 'subscribe',
+//                    personal: 'overview'
+//                }
+//            }).done(function(msg) {
+//                //alert(msg);
+//                $('#wblist').html(msg);
+//                //alert( "success" );
+//            }).fail(function() {
+//                alert( "error" );
+//            });
+//        }
         //function Update(id){
             //alert($(this).closest("tr").html());
             //alert(tr.length);

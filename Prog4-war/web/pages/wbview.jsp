@@ -16,6 +16,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <title>White Board</title>
     </head>
     <body>
-        <h1><% out.print(request.getParameter("name")); %> </h1>
+        <h1>White Board Name: <% out.print(request.getParameter("name")); %> </h1>
     </body>
 </html>

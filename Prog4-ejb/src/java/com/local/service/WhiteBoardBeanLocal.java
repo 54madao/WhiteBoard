@@ -21,5 +21,5 @@ public interface WhiteBoardBeanLocal {
     public void delete(WhiteBoard wb);
     public WhiteBoard get(long id);
     public List<WhiteBoard> getAll();
-    public void subscribe(WhiteBoard wb, Users user);
+    //public void subscribe(WhiteBoard wb, Users user);
 }

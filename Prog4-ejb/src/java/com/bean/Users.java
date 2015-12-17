@@ -36,11 +36,8 @@ public class Users implements Serializable {
     @Column(name = "PASSWORD", nullable=false)
     private String password;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "owner", orphanRemoval=true )
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "owner", orphanRemoval=true )
     private Set<WhiteBoard> own;
-    
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "subscriber" )
-    private Set<WhiteBoard> subscrib;
         
     public void setUserName(String userName) {
         this.userName = userName;
@@ -105,16 +102,6 @@ public class Users implements Serializable {
 
     public void setOwn(Set<WhiteBoard> own) {
         this.own = own;
-    }
-
-    public Set<WhiteBoard> getSubscrib() {
-        return subscrib;
-    }
-
-    public void setSubscrib(Set<WhiteBoard> subscrib) {
-        this.subscrib = subscrib;
-    }
-    
-    
+    } 
     
 }
