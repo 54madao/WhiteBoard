@@ -6,11 +6,16 @@
 package com.bean;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -31,6 +36,12 @@ public class Users implements Serializable {
     @Column(name = "PASSWORD", nullable=false)
     private String password;
 
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "owner", orphanRemoval=true )
+    private Set<WhiteBoard> own;
+    
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER )
+    private Set<WhiteBoard> subscrib;
+        
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -79,5 +90,31 @@ public class Users implements Serializable {
     public String toString() {
         return "com.bean.Users[ id=" + id + " ]";
     }
+
+    public Set<WhiteBoard> getWb() {
+        return own;
+    }
+
+    public void setWb(Set<WhiteBoard> wb) {
+        this.own = wb;
+    }
+
+    public Set<WhiteBoard> getOwn() {
+        return own;
+    }
+
+    public void setOwn(Set<WhiteBoard> own) {
+        this.own = own;
+    }
+
+    public Set<WhiteBoard> getSubscrib() {
+        return subscrib;
+    }
+
+    public void setSubscrib(Set<WhiteBoard> subscrib) {
+        this.subscrib = subscrib;
+    }
+    
+    
     
 }

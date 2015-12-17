@@ -7,11 +7,18 @@
 package com.bean;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -33,8 +40,13 @@ import javax.persistence.Table;
         @Column(name="NAME", nullable=false)
             private String name;
         
-        @Column(name="OWNER", nullable=false)
-            private Long owner;
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name="ID_OWNER", nullable=false)
+            private Users owner;
+        
+        @ManyToMany(cascade={CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "subscrib")
+        @JoinColumn(name="ID_SUBSCRIBER")
+            private Set<Users> subscriber;
         
         public String getName() {
             return name;
@@ -85,12 +97,20 @@ import javax.persistence.Table;
 	    this.description = description;
 	}
 
-    public Long getOwner() {
+    public Users getOwner() {
         return owner;
     }
 
-    public void setOwner(Long owner) {
+    public void setOwner(Users owner) {
         this.owner = owner;
+    }
+
+    public Set<Users> getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(Set<Users> subscriber) {
+        this.subscriber = subscriber;
     }
         
     }

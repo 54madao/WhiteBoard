@@ -81,7 +81,7 @@ import javax.servlet.http.HttpServletResponse;
                 whiteboard.setName(wbName);
                 whiteboard.setDescription(wbDes);
                 user = ub.get(wbOwner);              
-                whiteboard.setOwner(user.getId());            
+                whiteboard.setOwner(user);            
 //                int size = wbb.getAll().size();
 //                long setid = size == 0 ? 0 : wbb.getAll().get(size - 1).getId() + 1;
 //                whiteboard.setId(setid);
@@ -120,7 +120,7 @@ import javax.servlet.http.HttpServletResponse;
                             "<input type='text' class='des' value=" +
                             wb.getDescription() + "></td>");
                 out.println("<td>" +
-                            wb.getOwner() + "</td>");
+                            wb.getOwner().getUserName() + "</td>");
                 out.println("<td>" +
                             "<a href='/Prog4-war/pages/wbview.jsp?name='" +
                             wb.getName() +

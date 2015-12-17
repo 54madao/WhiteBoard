@@ -56,8 +56,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
               <ul class="nav nav-sidebar">
-                  <li><a href="#" class="active">Overview</a></li>
-                <li><a href="#">Home Page</a></li>
+                  <li><a href="#">Overview</a></li>
+                <li><a href="<%=basePath%>pages/home.jsp" class="active">Home Page</a></li>
                 <li><a href="<%=basePath%>pages/accountMgn.jsp">Administration</a></li>
               </ul>
         
