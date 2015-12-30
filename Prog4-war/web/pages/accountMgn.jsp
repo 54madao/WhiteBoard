@@ -181,9 +181,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var id = tr.eq(0).text();
             var name = tr.find('.name').val();
             var pass = tr.find('.pass').val();
-//            alert(id);
-//            alert(name);
-//            alert(des);
             $.ajax({
                 url: '../UserServlet',
                 method: 'POST',

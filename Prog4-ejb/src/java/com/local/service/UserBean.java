@@ -27,15 +27,12 @@ public class UserBean implements UserBeanLocal {
     
     private List<Users> users;
     @PostConstruct
-	private void init( ) {
+    private void init( ) {
         //users = new ArrayList<>( );
     }
-        
-    
-    
+         
     @Override
     public boolean add(Users user) {
-        //em.persist(wb);
 
         //users.add(user);
         if(get(user.getUserName()) == null){
@@ -48,20 +45,19 @@ public class UserBean implements UserBeanLocal {
 
     @Override
     public void update(Users user) {
-        //em.merge(wb);
-        
+      
         //facade
-        Users us = get(user.getId());
-        //int index = this.users.indexOf(us);
-        //this.users.set(index, us);
+        Users us = get(user.getId());  
         us.setUserName(user.getUserName());
         us.setPassword(user.getPassword());
         em.merge(us);
+        
+        //int index = this.users.indexOf(us);
+        //this.users.set(index, us);
     }
 
     @Override
     public void delete(Users user) {
-        //em.remove(em.merge(user));
         
         //facade
         Users us = get(user.getId());
@@ -72,10 +68,7 @@ public class UserBean implements UserBeanLocal {
 
     @Override
     public Users get(long id) {
-        /*String jpql = "from TestUserInfo s where s.userId=:uId";
-	Query query = em.createQuery(jpql);
-	query.setParameter("uId", userId);
-	return (TestUserInfo)query.getSingleResult();*/
+        
 //        for(Users us: this.users){
 //            if(us.getId() == id){
 //                return us;
@@ -90,20 +83,13 @@ public class UserBean implements UserBeanLocal {
 
     @Override
     public List<Users> getAll() {
-        /*String jpql = "from TestUserInfo s";
-		
-	Query query = em.createQuery(jpql);	
-	List<TestUserInfo> list = query.getResultList();
-	return list;*/
+        
         String sql = "from Users s";
 		
 	Query q = em.createQuery(sql);
         this.users = q.getResultList();
         return this.users;
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     @Override
     public boolean check(Users user) {

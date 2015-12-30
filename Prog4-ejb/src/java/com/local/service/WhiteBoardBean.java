@@ -32,8 +32,6 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
         //wb = new ArrayList<>( );
     }
         
-    
-    
     @Override
     public void add(WhiteBoard wb) {
         em.persist(wb);
@@ -42,7 +40,6 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
 
     @Override
     public void update(WhiteBoard wb) {
-        //em.merge(wb);
         
         //facade
         WhiteBoard whiteboard = get(wb.getId());
@@ -55,7 +52,6 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
 
     @Override
     public void delete(WhiteBoard wb) {
-        //em.remove(em.merge(user));
         
         //facade
         WhiteBoard whiteboard = get(wb.getId());
@@ -67,10 +63,7 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
 
     @Override
     public WhiteBoard get(long id) {
-        /*String jpql = "from TestUserInfo s where s.userId=:uId";
-	Query query = em.createQuery(jpql);
-	query.setParameter("uId", userId);
-	return (TestUserInfo)query.getSingleResult();*/
+        
 //        for(WhiteBoard wb: this.wb){
 //            if(wb.getId() == id){
 //                return wb;
@@ -85,11 +78,7 @@ public class WhiteBoardBean implements WhiteBoardBeanLocal {
 
     @Override
     public List<WhiteBoard> getAll() {
-        /*String jpql = "from TestUserInfo s";
-		
-	Query query = em.createQuery(jpql);	
-	List<TestUserInfo> list = query.getResultList();
-	return list;*/
+        
         //return this.wb;
         String sql = "from WhiteBoard s";	
 	Query q = em.createQuery(sql);	 
